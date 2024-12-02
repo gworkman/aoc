@@ -1,12 +1,17 @@
 defmodule AoC.Solutions.Y24.Day02Test do
   use ExUnit.Case
 
-  @part_one_example_solution 0
-  @part_two_example_solution 0
+  @part_one_example_solution 2
+  @part_two_example_solution 4
 
   def example_input() do
     """
-
+    7 6 4 2 1
+    1 2 7 8 9
+    9 7 6 2 1
+    1 3 2 4 5
+    8 6 4 4 1
+    1 3 6 7 9
     """
   end
 
