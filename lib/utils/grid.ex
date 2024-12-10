@@ -34,6 +34,15 @@ defmodule AoC.Utils.Grid do
     end
   end
 
+  def put(%__MODULE__{} = grid, %Location{} = loc, value) do
+    new_data =
+      List.update_at(grid.data, loc.row, fn row ->
+        List.replace_at(row, loc.col, value)
+      end)
+
+    %{grid | data: new_data}
+  end
+
   defp clamp(%__MODULE__{} = grid, %Location{} = loc) do
     cond do
       loc.row >= grid.nrows -> nil
