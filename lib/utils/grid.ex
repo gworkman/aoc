@@ -21,7 +21,7 @@ defmodule AoC.Utils.Grid do
     |> List.flatten()
   end
 
-  def shift(%__MODULE__{} = grid, %Location{} = loc, direction) do
+  def shift(%__MODULE__{} = grid, %Location{} = loc, direction) when is_atom(direction) do
     case direction do
       :n -> clamp(grid, %{loc | row: loc.row - 1})
       :s -> clamp(grid, %{loc | row: loc.row + 1})
@@ -34,6 +34,10 @@ defmodule AoC.Utils.Grid do
     end
   end
 
+  def shift(%__MODULE__{} = grid, %Location{} = loc, {nrows, ncols}) do
+    clamp(grid, %{loc | row: loc.row + nrows, col: loc.col + ncols})
+  end
+
   def put(%__MODULE__{} = grid, %Location{} = loc, value) do
     new_data =
       List.update_at(grid.data, loc.row, fn row ->
@@ -41,6 +45,20 @@ defmodule AoC.Utils.Grid do
       end)
 
     %{grid | data: new_data}
+  end
+
+  def count_where(%__MODULE__{data: data}, value_or_fun) do
+    fun =
+      cond do
+        is_function(value_or_fun) -> value_or_fun
+        true -> fn val -> val == value_or_fun end
+      end
+
+    Enum.map(data, fn row ->
+      Enum.filter(row, fun)
+      |> Enum.count()
+    end)
+    |> Enum.sum()
   end
 
   defp clamp(%__MODULE__{} = grid, %Location{} = loc) do
