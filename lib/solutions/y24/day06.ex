@@ -18,16 +18,8 @@ defmodule AoC.Solutions.Y24.Day06 do
       |> Grid.iter()
       |> Enum.find(fn loc -> loc.value == "^" end)
 
-    new_grid = trace_guard_path(grid, starting_pos, :n)
-
-    new_grid.data
-    |> Enum.reduce(0, fn row, acc ->
-      visited_positions =
-        Enum.filter(row, &(&1 == "X"))
-        |> Enum.count()
-
-      acc + visited_positions
-    end)
+    trace_guard_path(grid, starting_pos, :n)
+    |> Grid.count_where("X")
   end
 
   @impl true
