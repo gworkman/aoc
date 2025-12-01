@@ -24,17 +24,30 @@ defmodule AoC.Solution do
       @year 2000 + String.to_integer(year_str)
       @day String.to_integer(day_str)
 
-      def year, do: @year
-      def day, do: @day
-
       def run do
-        with {:ok, input} <- AoC.Problem.input(year(), day()),
+        with {:ok, input} <- AoC.Problem.input(@year, @day),
              data <- __MODULE__.parse(input, []) do
           part_one = __MODULE__.part_one(data)
           part_two = __MODULE__.part_two(data)
 
-          {:ok, {part_one, part_two}}
+          {:ok, [part_one: part_one, part_two: part_two]}
         end
+      end
+
+      def benchmark do
+        {:ok, input} = AoC.Problem.input(@year, @day)
+        data = __MODULE__.parse(input, [])
+
+        Benchee.run(
+          %{
+            "part_one" => fn -> __MODULE__.part_one(data) end,
+            "part_two" => fn -> __MODULE__.part_two(data) end
+          },
+          warmup: 2,
+          time: 3
+        )
+
+        nil
       end
 
       def parse(raw_input, opts \\ [])
