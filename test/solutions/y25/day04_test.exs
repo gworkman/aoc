@@ -1,0 +1,39 @@
+defmodule AoC.Solutions.Y25.Day04Test do
+  use ExUnit.Case
+
+  @part_one_example_solution 13
+  @part_two_example_solution 43
+
+  def example_input() do
+    """
+    ..@@.@@@@.
+    @@@.@.@.@@
+    @@@@@.@.@@
+    @.@@@@..@.
+    @@.@@@@.@@
+    .@@@@@@@.@
+    .@.@.@.@@@
+    @.@@@.@@@@
+    .@@@@@@@@.
+    @.@.@@@.@.
+    """
+  end
+
+  test "part_one_example" do
+    calculated =
+      example_input()
+      |> AoC.Solutions.Y25.Day04.parse()
+      |> AoC.Solutions.Y25.Day04.part_one()
+
+    assert @part_one_example_solution == calculated
+  end
+
+  test "part_two_example" do
+    calculated =
+      example_input()
+      |> AoC.Solutions.Y25.Day04.parse()
+      |> AoC.Solutions.Y25.Day04.part_two()
+
+    assert @part_two_example_solution == calculated
+  end
+end
